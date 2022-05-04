@@ -16,7 +16,7 @@ import { next as shortcodeNext, string as shortcodeString } from '@wordpress/sho
  */
 export default function ShortcodeControls( { setAttributes, attributes } ) {
 
-	function parseShortcodes( shortcode ) {
+	function parseShortcodes( shortcode = '' ) {
 		const parsedShortCode = [];
 		const tagRegex = /\[([^\/]\S[^\]|\s]*)(?=.*])/g;
 		const tags = [ ...shortcode.matchAll( tagRegex ) ].map( ( tag ) => tag[1] );
