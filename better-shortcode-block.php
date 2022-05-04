@@ -3,8 +3,8 @@
  * Plugin Name: Better Shortcode Block
  * Plugin URI: https://github.com/mauteri/better-shortcode-block
  * Description: A better version of the Shortcode Block
- * Requires at least: 5.8
- * Requires PHP: 7.1
+ * Requires at least: 5.0
+ * Requires PHP: 5.6
  * Version: 0.1
  * Author: Mike Auteri
  * Text Domain: better-shortcode-block
