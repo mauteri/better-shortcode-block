@@ -38,7 +38,6 @@ class Setup {
 	}
 
 	public function register_block() {
-		unregister_block_type( 'core/shortcode' );
 		register_block_type(
 			BETTER_SHORTCODE_BLOCK_PATH,
 			array(

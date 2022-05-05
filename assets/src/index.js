@@ -21,11 +21,7 @@ const settings = {
 	save,
 }
 
-wp.domReady(() => {
-	wp.blocks.unregisterBlockType( 'core/shortcode' );
-
-	registerBlockType(
-		name,
-		settings
-	)
-});
+registerBlockType(
+	name,
+	settings
+)
