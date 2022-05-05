@@ -15,6 +15,7 @@ class Setup {
 	 */
 	public function __construct() {
 		$this->instantiate();
+		$this->setup_hooks();
 	}
 
 	/**
@@ -25,6 +26,29 @@ class Setup {
 	protected function instantiate() {
 		new Assets();
 		new Rest_API();
+	}
+
+	/**
+	 * Setup actions and filters.
+	 *
+	 * @return void
+	 */
+	protected function setup_hooks() {
+		add_action( 'init', array( $this, 'register_block' ) );
+	}
+
+	public function register_block() {
+		unregister_block_type( 'core/shortcode' );
+		register_block_type(
+			BETTER_SHORTCODE_BLOCK_PATH,
+			array(
+				'render_callback' => array( $this, 'render_shortcode' ),
+			)
+		);
+	}
+
+	public function render_shortcode( $attributes, $content ) {
+		return wpautop( $content );
 	}
 
 }

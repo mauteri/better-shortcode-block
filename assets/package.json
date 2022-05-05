@@ -23,6 +23,7 @@
 	"license": "ISC",
 	"devDependencies": {
 		"@wordpress/api-fetch": "^6.4.0",
+		"@wordpress/autop": "^3.8.0",
 		"@wordpress/block-editor": "^8.6.0",
 		"@wordpress/blocks": "^11.6.0",
 		"@wordpress/icons": "^8.3.0",

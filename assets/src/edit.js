@@ -88,7 +88,7 @@ export default function ShortcodeEdit( { attributes, setAttributes } ) {
 							isPressed={ ! attributes.preview }
 							onClick={ switchToShortcode }
 						>
-							{ __( 'Shortcode' ) }
+							{ __( 'Raw' ) }
 						</ToolbarButton>
 						<ToolbarButton
 							className="components-tab-button"
@@ -111,7 +111,7 @@ export default function ShortcodeEdit( { attributes, setAttributes } ) {
 						className="components-placeholder__label"
 					>
 						<Icon icon={ shortcode } />
-						{ __( 'Shortcode' ) }
+						{ __( 'Better Shortcode' ) }
 					</label>
 					<PlainText
 						className="blocks-shortcode__textarea"
