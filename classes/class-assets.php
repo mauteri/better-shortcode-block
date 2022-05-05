@@ -8,7 +8,7 @@ class Assets {
 	}
 
 	protected function setup_hooks(): void {
-//		add_action( 'enqueue_block_editor_assets', [ $this, 'block_editor_assets' ] );
+		add_action( 'enqueue_block_editor_assets', [ $this, 'block_editor_assets' ] );
 	}
 
 	public function block_editor_assets(): void {

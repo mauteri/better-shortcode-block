@@ -38,12 +38,14 @@ class Setup {
 	}
 
 	public function register_block() {
-		register_block_type(
-			BETTER_SHORTCODE_BLOCK_PATH,
-			array(
-				'render_callback' => array( $this, 'render_shortcode' ),
-			)
-		);
+//		unregister_block_type( 'core/shortcode' );
+
+//		register_block_type(
+//			BETTER_SHORTCODE_BLOCK_PATH,
+//			array(
+//				'render_callback' => array( $this, 'render_shortcode' ),
+//			)
+//		);
 	}
 
 	public function render_shortcode( $attributes, $content ) {
