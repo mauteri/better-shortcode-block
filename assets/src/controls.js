@@ -19,10 +19,10 @@ export default function ShortcodeControls( { setAttributes, attributes } ) {
 	function parseShortcodes( shortcode = '' ) {
 		const parsedShortCode = [];
 		const tagRegex = /\[([^\/]\S[^\]|\s]*)(?=.*])/g;
-		const tags = [ ...shortcode.matchAll( tagRegex ) ].map( ( tag ) => tag[1] );
-		tags.map( ( tag ) => {
+
+		[ ...shortcode.matchAll( tagRegex ) ].map( ( tag ) => {
 			parsedShortCode.push(
-				newShortcodeObject( tag, shortcode )
+				newShortcodeObject( tag[1], shortcode, tag.index )
 			)
 		});
 
@@ -35,10 +35,11 @@ export default function ShortcodeControls( { setAttributes, attributes } ) {
 	 *
 	 * @param tag
 	 * @param shortcode
+	 * @param index
 	 * @returns {?WPShortcodeMatch}
 	 */
-	function newShortcodeObject( tag, shortcode  ) {
-		const shortcodeObject = shortcodeNext( tag, shortcode );
+	function newShortcodeObject( tag, shortcode, index ) {
+		const shortcodeObject = shortcodeNext( tag, shortcode, index );
 		const attrRegex = new RegExp( `\\[${tag}([^\\]]+)?`, 'gi' );
 		const updatedAttrs = [ ...shortcodeObject.content.matchAll( attrRegex ) ].map( ( attrs ) => attrs[1] )[0];
 
