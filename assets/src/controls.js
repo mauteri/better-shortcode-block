@@ -18,7 +18,8 @@ export default function ShortcodeControls( { setAttributes, attributes } ) {
 
 	function parseShortcodes( shortcode = '' ) {
 		const parsedShortCode = [];
-		const tagRegex = /\[([^\/]\S[^\]|\s]*)(?=.*])/g;
+		// Regex: https://regex101.com/r/UbDoWO/1
+		const tagRegex = /\[([a-z][a-z\d_-]*)[^\]|\[]*]/g;
 
 		[ ...shortcode.matchAll( tagRegex ) ].map( ( tag ) => {
 			parsedShortCode.push(
