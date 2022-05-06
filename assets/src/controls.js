@@ -16,6 +16,12 @@ import { next as shortcodeNext, string as shortcodeString } from '@wordpress/sho
  */
 export default function ShortcodeControls( { setAttributes, attributes } ) {
 
+	/**
+	 * Parse shortcode string and build an array of shortcode objects.
+	 *
+	 * @param shortcode
+	 * @returns {*[]}
+	 */
 	function parseShortcodes( shortcode = '' ) {
 		const parsedShortCode = [];
 		// Regex: https://regex101.com/r/UbDoWO/1
