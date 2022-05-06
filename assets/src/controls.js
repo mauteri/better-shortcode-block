@@ -14,7 +14,7 @@ import { next as shortcodeNext, string as shortcodeString } from '@wordpress/sho
  * @returns {JSX.Element}
  * @constructor
  */
-export default function ShortcodeControls( { setAttributes, attributes } ) {
+export default function ShortcodeControls( { setAttributes, attributes, registeredShortcodes } ) {
 
 	/**
 	 * Parse shortcode string and build an array of shortcode objects.
@@ -28,6 +28,10 @@ export default function ShortcodeControls( { setAttributes, attributes } ) {
 		const tagRegex = /\[([a-z][a-z\d_-]*)[^\]|\[]*]/g;
 
 		[ ...shortcode.matchAll( tagRegex ) ].map( ( tag ) => {
+			if ( ! registeredShortcodes.includes( tag[1] ) ) {
+				return;
+			}
+
 			parsedShortCode.push(
 				newShortcodeObject( tag[1], shortcode, tag.index )
 			)

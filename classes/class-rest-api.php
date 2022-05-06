@@ -51,10 +51,10 @@ class Rest_API {
 	protected function get_routes() {
 		return array(
 			array(
-				'route' => 'render-shortcode',
+				'route' => 'shortcode',
 				'args'  => array(
 					'methods'             => \WP_REST_Server::READABLE,
-					'callback'            => array( $this, 'render_shortcode' ),
+					'callback'            => array( $this, 'shortcode' ),
 					'permission_callback' => '__return_true',
 					'args'                => array(
 						'_wpnonce'   => array(
@@ -67,7 +67,7 @@ class Rest_API {
 						),
 						'shortcode' => array(
 							'required'          => true,
-							'validate_callback' => array( $this, 'validate_shortcode' )
+							'validate_callback' => array( $this, 'validate' )
 						),
 					),
 				),
@@ -82,24 +82,38 @@ class Rest_API {
 	 *
 	 * @return bool
 	 */
-	public function validate_shortcode( $shortcode ) {
+	public function validate( $shortcode ) {
 		return ! empty( $shortcode );
 	}
 
 	/**
-	 * Endpoint to return rendered shortcodes.
+	 * Endpoint to return shortcodes.
 	 *
 	 * @param \WP_REST_Request $request
 	 *
 	 * @return \WP_REST_Response
 	 */
-	public function render_shortcode( \WP_REST_Request $request ) {
-		$params    = $request->get_params();
-		$shortcode = $params['shortcode'];
+	public function shortcode( \WP_REST_Request $request ) {
+		$params     = $request->get_params();
+		$shortcode  = $params['shortcode'];
+		$registered = [];
 
-		$response = array(
-			'success'  => true,
-			'rendered' => do_shortcode( $shortcode ),
+		preg_match_all( '/\[([a-z][a-z\d_-]*)[^]|\[]*]/', $shortcode, $matches );
+
+		if ( ! empty( $matches[1] ) ) {
+			foreach ( $matches[1] as $tag ) {
+				if ( shortcode_exists( $tag ) ) {
+					$registered[] = $tag;
+				}
+			}
+		}
+
+		$registered = array_values( array_unique( $registered ) );
+		$response   = array(
+			'success'    => true,
+			'raw'        => $shortcode,
+			'registered' => $registered,
+			'rendered'   => do_shortcode( $shortcode ),
 		);
 
 		return new \WP_REST_Response( $response );

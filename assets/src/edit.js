@@ -28,6 +28,7 @@ export default function ShortcodeEdit( { attributes, setAttributes } ) {
 	const instanceId = useInstanceId( ShortcodeEdit );
 	const inputId = `blocks-shortcode-input-${ instanceId }`;
 	const [ shortcodeMarkup, setShortcodeMarkup ] = useState( '' );
+	const [ registeredShortcodes, setRegisteredShortcodes ] = useState( [] );
 
 	/**
 	 * Default styles used to unset some of the styles
@@ -70,9 +71,10 @@ export default function ShortcodeEdit( { attributes, setAttributes } ) {
 	 */
 	useEffect( () => {
 		apiFetch({
-			path: `/better-shortcode-block/render-shortcode?shortcode=${encodeURIComponent( attributes.text )}`,
+			path: `/better-shortcode-block/shortcode?shortcode=${encodeURIComponent( attributes.text )}`,
 		}).then( ( res ) => {
 			if ( res.success ) {
+				setRegisteredShortcodes( res.registered );
 				setShortcodeMarkup( res.rendered );
 			}
 		});
@@ -124,7 +126,7 @@ export default function ShortcodeEdit( { attributes, setAttributes } ) {
 				</div>
 				) }
 			</View>
-			<ShortcodeControls setAttributes={ setAttributes } attributes={ attributes } />
+			<ShortcodeControls setAttributes={ setAttributes } attributes={ attributes } registeredShortcodes={ registeredShortcodes } />
 		</>
 	)
 }

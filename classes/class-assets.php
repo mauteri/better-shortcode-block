@@ -22,8 +22,8 @@ class Assets {
 	 *
 	 * @return void
 	 */
-	protected function setup_hooks(): void {
-		add_action( 'enqueue_block_editor_assets', [ $this, 'block_editor_assets' ] );
+	protected function setup_hooks() {
+		add_action( 'enqueue_block_editor_assets', array( $this, 'block_editor_assets' ) );
 	}
 
 	/**
@@ -31,7 +31,7 @@ class Assets {
 	 *
 	 * @return void
 	 */
-	public function block_editor_assets(): void {
+	public function block_editor_assets() {
 		$path  = BETTER_SHORTCODE_BLOCK_PATH . '/assets/build/';
 		$build = BETTER_SHORTCODE_BLOCK_URL . 'assets/build/';
 		$asset = require_once $path . 'index.asset.php';
