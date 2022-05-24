@@ -51,9 +51,12 @@ export default function ShortcodeControls( { setAttributes, attributes, register
 	 */
 	function newShortcodeObject( tag, shortcode, index ) {
 		const shortcodeObject = shortcodeNext( tag, shortcode, index );
-		// Regex: https://regex101.com/r/OU9MF2/1
-		const attrRegex = new RegExp( `\\[${tag}([^\\]|\\/]+)?`, 'gi' );
-		const updatedAttrs = [ ...shortcodeObject.content.matchAll( attrRegex ) ].map( ( attrs ) => attrs[1] )[0];
+		// Regex: https://regex101.com/r/FzYUWv/1
+		const attrRegex = new RegExp( `\\[${tag}([^\\]]+)?`, 'gi' );
+		let updatedAttrs = [ ...shortcodeObject.content.matchAll( attrRegex ) ].map( ( attrs ) => attrs[1] )[0];
+
+		// Remove trailing / if self-closing shortcode.
+		updatedAttrs = updatedAttrs.replace(/\/$/, '');
 
 		if ( 'undefined' !== typeof updatedAttrs ) {
 			shortcodeObject.shortcode.attrs = parseStringAttrs(updatedAttrs);
