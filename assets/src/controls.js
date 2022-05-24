@@ -51,7 +51,8 @@ export default function ShortcodeControls( { setAttributes, attributes, register
 	 */
 	function newShortcodeObject( tag, shortcode, index ) {
 		const shortcodeObject = shortcodeNext( tag, shortcode, index );
-		const attrRegex = new RegExp( `\\[${tag}([^\\]]+)?`, 'gi' );
+		// Regex: https://regex101.com/r/OU9MF2/1
+		const attrRegex = new RegExp( `\\[${tag}([^\\]|\\/]+)?`, 'gi' );
 		const updatedAttrs = [ ...shortcodeObject.content.matchAll( attrRegex ) ].map( ( attrs ) => attrs[1] )[0];
 
 		if ( 'undefined' !== typeof updatedAttrs ) {
