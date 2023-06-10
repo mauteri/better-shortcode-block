@@ -5,7 +5,7 @@
 	"title": "Better Shortcode",
 	"category": "widgets",
 	"description": "Insert additional custom elements with a WordPress shortcode.",
-	"textdomain": "default",
+	"textdomain": "better-shortcode-block",
 	"attributes": {
 		"text": {
 			"type": "string",

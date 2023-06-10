@@ -113,14 +113,14 @@ export default function ShortcodeEdit( { attributes, setAttributes } ) {
 						className="components-placeholder__label"
 					>
 						<Icon icon={ shortcode } />
-						{ __( 'Better Shortcode' ) }
+						{ __( 'Better Shortcode', 'better-shortcode-block' ) }
 					</label>
 					<PlainText
 						className="blocks-shortcode__textarea"
 						id={ inputId }
 						value={ attributes.text }
-						aria-label={ __( 'Shortcode text' ) }
-						placeholder={ __( 'Write shortcode here…' ) }
+						aria-label={ __( 'Shortcode text', 'better-shortcode-block' ) }
+						placeholder={ __( 'Write shortcode here…', 'better-shortcode-block' ) }
 						onChange={ ( text ) => setAttributes( { text } ) }
 					/>
 				</div>

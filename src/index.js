@@ -2,7 +2,7 @@
  * WordPress dependencies
  */
 import { shortcode as icon } from '@wordpress/icons';
-import { registerBlockType } from '@wordpress/blocks';
+import { addFilter } from '@wordpress/hooks';
 
 /**
  * Internal dependencies
@@ -26,17 +26,8 @@ function replaceShortcodeBlock( currentSettings, currentName ) {
 	return currentSettings;
 }
 
-wp.hooks.addFilter(
+addFilter(
 	'blocks.registerBlockType',
 	'better-shortcode-block/replace-block',
 	replaceShortcodeBlock
 );
-// wp.domReady(() => {
-// 	wp.blocks.unregisterBlockType( 'core/shortcode' );
-//
-// 	registerBlockType(
-// 		name,
-// 		settings
-// 	)
-//
-// });

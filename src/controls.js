@@ -185,7 +185,7 @@ export default function ShortcodeControls( { setAttributes, attributes, register
 			<PanelBody key={ 'panel_' + index } title={ item.shortcode.tag.toUpperCase() } initialOpen={ false }>
 				<>
 					{ JSON.stringify( item.shortcode.attrs.named ) === '{}' &&
-						<Text adjustLineHeightForInnerControls>{  __( 'Shortcode has no attributes.' ) }</Text>
+						<Text adjustLineHeightForInnerControls>{  __( 'Shortcode has no attributes.', 'better-shortcode-block' ) }</Text>
 					}
 
 					{ Object.keys( item.shortcode.attrs.named ).map( ( name, i ) => (
@@ -199,7 +199,7 @@ export default function ShortcodeControls( { setAttributes, attributes, register
 
 					{ item.shortcode.attrs.numeric.map( ( property, i ) => (
 						<TextControl
-							label={ __( 'property' ) + ' ' + i }
+							label={ __( 'property', 'better-shortcode-block' ) + ' ' + i }
 							key={ index + '_property_' + i }
 							value={ property }
 							onChange={ ( value ) => updateShortcodeAtts( value, item, i ) }
@@ -208,7 +208,7 @@ export default function ShortcodeControls( { setAttributes, attributes, register
 
 					{ item.shortcode.content  &&
 						<TextareaControl
-							label={ __( 'content' ) }
+							label={ __( 'content', 'better-shortcode-block' ) }
 							value={ item.shortcode.content }
 							onChange={ ( value ) => updateShortcodeContent( value, item ) }
 						/>
