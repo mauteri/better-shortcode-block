@@ -15,8 +15,8 @@
 define( 'BETTER_SHORTCODE_BLOCK_URL', plugin_dir_url( __FILE__ ) );
 define( 'BETTER_SHORTCODE_BLOCK_PATH', __DIR__ );
 
-require_once 'classes/class-assets.php';
-require_once 'classes/class-rest-api.php';
-require_once 'classes/class-setup.php';
+require_once 'includes/classes/class-assets.php';
+require_once 'includes/classes/class-rest-api.php';
+require_once 'includes/classes/class-setup.php';
 
 new BetterShortcodeBlock\Setup();

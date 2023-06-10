@@ -21,5 +21,5 @@
 		"customClassName": false,
 		"html": false
 	},
-	"editorScript": "file:./assets/build/index.js"
+	"editorScript": "file:./build/index.js"
 }
