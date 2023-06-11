@@ -2,7 +2,7 @@
 /**
  * PHPUnit bootstrap file.
  *
- * @package Better_Shortcode_Block
+ * @package BetterShortcodeBlock
  * @subpackage Tests
  */
 

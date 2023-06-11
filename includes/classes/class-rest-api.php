@@ -2,10 +2,10 @@
 /**
  * Class is responsible for registering REST API endpoints.
  *
- * @package Better_Shortcode_Block
+ * @package BetterShortcodeBlock
  */
 
-namespace Better_Shortcode_Block;
+namespace BetterShortcodeBlock;
 
 /**
  * Class Rest_API

@@ -2,10 +2,10 @@
 /**
  * Class is responsible for executing plugin setups.
  *
- * @package Better_Shortcode_Block
+ * @package BetterShortcodeBlock
  */
 
-namespace Better_Shortcode_Block;
+namespace BetterShortcodeBlock;
 
 /**
  * Class Setup.
