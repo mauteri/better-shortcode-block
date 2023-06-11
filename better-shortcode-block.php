@@ -9,7 +9,7 @@
  * Author: Mike Auteri
  * Text Domain: better-shortcode-block
  *
- * @package BetterShortcodeBlock
+ * @package Better_Shortcode_Block
  */
 
 define( 'BETTER_SHORTCODE_BLOCK_URL', plugin_dir_url( __FILE__ ) );
@@ -19,4 +19,4 @@ require_once 'includes/classes/class-assets.php';
 require_once 'includes/classes/class-rest-api.php';
 require_once 'includes/classes/class-setup.php';
 
-new BetterShortcodeBlock\Setup();
+new Better_Shortcode_Block\Setup();

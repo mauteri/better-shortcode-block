@@ -2,10 +2,10 @@
 /**
  * Class is responsible for loading all static assets.
  *
- * @package BetterShortcodeBlock
+ * @package Better_Shortcode_Block
  */
 
-namespace BetterShortcodeBlock;
+namespace Better_Shortcode_Block;
 
 /**
  * Class Assets.
