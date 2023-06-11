@@ -9,7 +9,7 @@
  * Author: Mike Auteri
  * Text Domain: better-shortcode-block
  *
- * @package better-shortcode-block
+ * @package BetterShortcodeBlock
  */
 
 define( 'BETTER_SHORTCODE_BLOCK_URL', plugin_dir_url( __FILE__ ) );

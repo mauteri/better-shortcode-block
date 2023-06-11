@@ -59,7 +59,7 @@ class Rest_API {
 					'callback'            => array( $this, 'shortcode' ),
 					'permission_callback' => '__return_true',
 					'args'                => array(
-						'_wpnonce'   => array(
+						'_wpnonce'     => array(
 							/**
 							 * WordPress will verify the nonce cookie, we just want to ensure nonce was passed as param.
 							 *
@@ -69,7 +69,7 @@ class Rest_API {
 						),
 						'shortcode' => array(
 							'required'          => true,
-							'validate_callback' => array( $this, 'validate' )
+							'validate_callback' => array( $this, 'validate' ),
 						),
 					),
 				),
@@ -80,7 +80,7 @@ class Rest_API {
 	/**
 	 * Validate shortcode.
 	 *
-	 * @param $shortcode
+	 * @param string $shortcode Shortcode to validate; check that not empty.
 	 *
 	 * @return bool
 	 */
@@ -91,14 +91,14 @@ class Rest_API {
 	/**
 	 * Endpoint to return shortcodes.
 	 *
-	 * @param \WP_REST_Request $request
+	 * @param \WP_REST_Request $request Contains data from the request.
 	 *
 	 * @return \WP_REST_Response
 	 */
 	public function shortcode( \WP_REST_Request $request ) {
 		$params     = $request->get_params();
 		$shortcode  = $params['shortcode'];
-		$registered = [];
+		$registered = array();
 
 		preg_match_all( '/\[([a-z][a-z\d_-]*)[^]|\[]*]/', $shortcode, $matches );
 
