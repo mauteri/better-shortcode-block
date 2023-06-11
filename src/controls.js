@@ -4,6 +4,7 @@
 import { __ } from '@wordpress/i18n';
 import { InspectorControls } from '@wordpress/block-editor';
 import {
+	// eslint-disable-next-line @wordpress/no-unsafe-wp-apis
 	__experimentalText as Text,
 	Panel,
 	PanelBody,
@@ -18,12 +19,11 @@ import {
 /**
  * Controls for Shortcode block.
  *
- * @param  setAttributes.setAttributes
- * @param  setAttributes
- * @param  attributes
- * @param  setAttributes.attributes
- * @param  setAttributes.registeredShortcodes
- * @return {JSX.Element}
+ * @param {Object}   attributes
+ * @param {Function} attributes.setAttributes
+ * @param {Object}   attributes.attributes
+ * @param {Object}   attributes.registeredShortcodes
+ * @return {JSX.Element} - shortcode controls.
  * @class
  */
 export default function ShortcodeControls( {
@@ -34,8 +34,8 @@ export default function ShortcodeControls( {
 	/**
 	 * Parse shortcode string and build an array of shortcode objects.
 	 *
-	 * @param  shortcode
-	 * @return {*[]}
+	 * @param {string} shortcode
+	 * @return {*[]} - parsed shortcode.
 	 */
 	function parseShortcodes( shortcode = '' ) {
 		const parsedShortCode = [];
@@ -44,12 +44,14 @@ export default function ShortcodeControls( {
 
 		[ ...shortcode.matchAll( tagRegex ) ].map( ( tag ) => {
 			if ( ! registeredShortcodes.includes( tag[ 1 ] ) ) {
-				return;
+				return tag;
 			}
 
 			parsedShortCode.push(
 				newShortcodeObject( tag[ 1 ], shortcode, tag.index )
 			);
+
+			return tag;
 		} );
 
 		return parsedShortCode;
@@ -59,10 +61,10 @@ export default function ShortcodeControls( {
 	 * Creates a new shortcode object. Uses some custom code because wp.shortcode
 	 * is a bit buggy when dealing with attrs.
 	 *
-	 * @param  tag
-	 * @param  shortcode
-	 * @param  index
-	 * @return {?WPShortcodeMatch}
+	 * @param {string} tag
+	 * @param {string} shortcode
+	 * @param {number} index
+	 * @return {Object} - shortcode object.
 	 */
 	function newShortcodeObject( tag, shortcode, index ) {
 		const shortcodeObject = shortcodeNext( tag, shortcode, index );
@@ -87,8 +89,8 @@ export default function ShortcodeControls( {
 	 *
 	 * Cannot use wp.shortcode.attrs as it utilizes _.memoize which caches results.
 	 *
-	 * @param  text
-	 * @return {{named: {}, numeric: *[]}}
+	 * @param {string} text
+	 * @return {{named: {}, numeric: *[]}} Object of shortcode attributes.
 	 */
 	function parseStringAttrs( text ) {
 		const named = {};
@@ -141,11 +143,11 @@ export default function ShortcodeControls( {
 	/**
 	 * Replaces a piece of a string between two indexes.
 	 *
-	 * @param  origin
-	 * @param  startIndex
-	 * @param  endIndex
-	 * @param  insertion
-	 * @return {string}
+	 * @param {string} origin
+	 * @param {number} startIndex
+	 * @param {number} endIndex
+	 * @param {string} insertion
+	 * @return {string} - Content between.
 	 */
 	function replaceBetween( origin, startIndex, endIndex, insertion ) {
 		return (
@@ -158,7 +160,7 @@ export default function ShortcodeControls( {
 	/**
 	 * Changes states of attributes.text after a change to the shortcode.
 	 *
-	 * @param item
+	 * @param {Object} item
 	 */
 	function updateAttributesText( item ) {
 		const text = replaceBetween(
@@ -174,8 +176,8 @@ export default function ShortcodeControls( {
 	/**
 	 * Updates the content of a shortcode.
 	 *
-	 * @param value
-	 * @param item
+	 * @param {string} value
+	 * @param {Object} item
 	 */
 	function updateShortcodeContent( value, item ) {
 		item.shortcode.content = value;
@@ -186,9 +188,9 @@ export default function ShortcodeControls( {
 	/**
 	 * Updates an attribute (named or numeric) of a shortcode.
 	 *
-	 * @param value
-	 * @param item
-	 * @param name
+	 * @param {string} value
+	 * @param {Object} item
+	 * @param {string} name
 	 */
 	function updateShortcodeAtts( value, item, name ) {
 		item.shortcode.set( name, value );
@@ -199,9 +201,9 @@ export default function ShortcodeControls( {
 	/**
 	 * Renders the block panel for Shortcode block.
 	 *
-	 * @param  item
-	 * @param  index
-	 * @return {JSX.Element}
+	 * @param {Object} item
+	 * @param {number} index
+	 * @return {JSX.Element} - Shortcode block panel.
 	 */
 	function renderPanelBody( item, index ) {
 		return (

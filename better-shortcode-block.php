@@ -19,4 +19,4 @@ require_once 'includes/classes/class-assets.php';
 require_once 'includes/classes/class-rest-api.php';
 require_once 'includes/classes/class-setup.php';
 
-new Better_Shortcode_Block\Setup();
+new BetterShortcodeBlock\Setup();

@@ -25,11 +25,10 @@ import ShortcodeControls from './controls';
 /**
  * Edit for Shortcode block.
  *
- * @param  attributes.attributes
- * @param  attributes
- * @param  setAttributes
- * @param  attributes.setAttributes
- * @return {JSX.Element}
+ * @param {Object}   attributes
+ * @param {Object}   attributes.attributes
+ * @param {Function} attributes.setAttributes
+ * @return {JSX.Element} - Edit shortcode block.
  * @class
  */
 export default function ShortcodeEdit( { attributes, setAttributes } ) {

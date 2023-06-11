@@ -4,13 +4,12 @@
 import { RawHTML } from '@wordpress/element';
 
 /**
- * Save for Shortcode block.
+ * Save block.
  *
- * @param  attributes.attributes
- * @param  attributes
- * @return {JSX.Element}
- * @class
+ * @param {Object} attributes
+ * @param {Object} attributes.attributes
+ * @return {JSX.Element} - Raw shortcode.
  */
-export default function ShortcodeSave( { attributes } ) {
+export default function save( { attributes } ) {
 	return <RawHTML>{ attributes.text }</RawHTML>;
 }
