@@ -59,7 +59,7 @@ class Rest_API {
 					'callback'            => array( $this, 'shortcode' ),
 					'permission_callback' => '__return_true',
 					'args'                => array(
-						'_wpnonce'     => array(
+						'_wpnonce'  => array(
 							/**
 							 * WordPress will verify the nonce cookie, we just want to ensure nonce was passed as param.
 							 *
