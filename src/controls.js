@@ -3,24 +3,39 @@
  */
 import { __ } from '@wordpress/i18n';
 import { InspectorControls } from '@wordpress/block-editor';
-import { __experimentalText as Text, Panel, PanelBody, TextareaControl, TextControl } from '@wordpress/components';
-import { next as shortcodeNext, string as shortcodeString } from '@wordpress/shortcode';
+import {
+	__experimentalText as Text,
+	Panel,
+	PanelBody,
+	TextareaControl,
+	TextControl,
+} from '@wordpress/components';
+import {
+	next as shortcodeNext,
+	string as shortcodeString,
+} from '@wordpress/shortcode';
 
 /**
  * Controls for Shortcode block.
  *
- * @param setAttributes
- * @param attributes
- * @returns {JSX.Element}
- * @constructor
+ * @param  setAttributes.setAttributes
+ * @param  setAttributes
+ * @param  attributes
+ * @param  setAttributes.attributes
+ * @param  setAttributes.registeredShortcodes
+ * @return {JSX.Element}
+ * @class
  */
-export default function ShortcodeControls( { setAttributes, attributes, registeredShortcodes } ) {
-
+export default function ShortcodeControls( {
+	setAttributes,
+	attributes,
+	registeredShortcodes,
+} ) {
 	/**
 	 * Parse shortcode string and build an array of shortcode objects.
 	 *
-	 * @param shortcode
-	 * @returns {*[]}
+	 * @param  shortcode
+	 * @return {*[]}
 	 */
 	function parseShortcodes( shortcode = '' ) {
 		const parsedShortCode = [];
@@ -28,14 +43,14 @@ export default function ShortcodeControls( { setAttributes, attributes, register
 		const tagRegex = /\[([a-z][a-z\d_-]*)[^\]|\[]*]/g;
 
 		[ ...shortcode.matchAll( tagRegex ) ].map( ( tag ) => {
-			if ( ! registeredShortcodes.includes( tag[1] ) ) {
+			if ( ! registeredShortcodes.includes( tag[ 1 ] ) ) {
 				return;
 			}
 
 			parsedShortCode.push(
-				newShortcodeObject( tag[1], shortcode, tag.index )
-			)
-		});
+				newShortcodeObject( tag[ 1 ], shortcode, tag.index )
+			);
+		} );
 
 		return parsedShortCode;
 	}
@@ -44,22 +59,24 @@ export default function ShortcodeControls( { setAttributes, attributes, register
 	 * Creates a new shortcode object. Uses some custom code because wp.shortcode
 	 * is a bit buggy when dealing with attrs.
 	 *
-	 * @param tag
-	 * @param shortcode
-	 * @param index
-	 * @returns {?WPShortcodeMatch}
+	 * @param  tag
+	 * @param  shortcode
+	 * @param  index
+	 * @return {?WPShortcodeMatch}
 	 */
 	function newShortcodeObject( tag, shortcode, index ) {
 		const shortcodeObject = shortcodeNext( tag, shortcode, index );
 		// Regex: https://regex101.com/r/FzYUWv/1
-		const attrRegex = new RegExp( `\\[${tag}([^\\]]+)?`, 'gi' );
-		let updatedAttrs = [ ...shortcodeObject.content.matchAll( attrRegex ) ].map( ( attrs ) => attrs[1] )[0];
+		const attrRegex = new RegExp( `\\[${ tag }([^\\]]+)?`, 'gi' );
+		let updatedAttrs = [
+			...shortcodeObject.content.matchAll( attrRegex ),
+		].map( ( attrs ) => attrs[ 1 ] )[ 0 ];
 
 		// Remove trailing / if self-closing shortcode.
-		updatedAttrs = updatedAttrs.replace(/\/$/, '');
+		updatedAttrs = updatedAttrs.replace( /\/$/, '' );
 
 		if ( 'undefined' !== typeof updatedAttrs ) {
-			shortcodeObject.shortcode.attrs = parseStringAttrs(updatedAttrs);
+			shortcodeObject.shortcode.attrs = parseStringAttrs( updatedAttrs );
 		}
 
 		return shortcodeObject;
@@ -70,12 +87,12 @@ export default function ShortcodeControls( { setAttributes, attributes, register
 	 *
 	 * Cannot use wp.shortcode.attrs as it utilizes _.memoize which caches results.
 	 *
-	 * @param text
-	 * @returns {{named: {}, numeric: *[]}}
+	 * @param  text
+	 * @return {{named: {}, numeric: *[]}}
 	 */
 	function parseStringAttrs( text ) {
-		let named = {};
-		let numeric = [];
+		const named = {};
+		const numeric = [];
 		let match;
 
 		/**
@@ -91,45 +108,51 @@ export default function ShortcodeControls( { setAttributes, attributes, register
 		 * 6. an unquoted value.
 		 * 7. A numeric attribute in double quotes.
 		 * 8. An unquoted numeric attribute.
+		 *
 		 * @type {RegExp}
 		 */
-		const pattern = /([\w-]+)\s*=\s*"([^"]*)"(?:\s|$)|([\w-]+)\s*=\s*'([^']*)'(?:\s|$)|([\w-]+)\s*=\s*([^\s'"]+)(?:\s|$)|"([^"]*)"(?:\s|$)|(\S+)(?:\s|$)/g;
+		const pattern =
+			/([\w-]+)\s*=\s*"([^"]*)"(?:\s|$)|([\w-]+)\s*=\s*'([^']*)'(?:\s|$)|([\w-]+)\s*=\s*([^\s'"]+)(?:\s|$)|"([^"]*)"(?:\s|$)|(\S+)(?:\s|$)/g;
 
 		// Map zero-width spaces to actual spaces.
 		text = text.replace( /[\u00a0\u200b]/g, ' ' );
 
 		// Match and normalize attributes.
 		while ( ( match = pattern.exec( text ) ) ) {
-			if ( match[1] ) {
-				named[ match[1].toLowerCase() ] = match[2];
-			} else if ( match[3] ) {
-				named[ match[3].toLowerCase() ] = match[4];
-			} else if ( match[5] ) {
-				named[ match[5].toLowerCase() ] = match[6];
-			} else if ( match[7] ) {
-				numeric.push( match[7] );
-			} else if ( match[8] ) {
-				numeric.push( match[8] );
+			if ( match[ 1 ] ) {
+				named[ match[ 1 ].toLowerCase() ] = match[ 2 ];
+			} else if ( match[ 3 ] ) {
+				named[ match[ 3 ].toLowerCase() ] = match[ 4 ];
+			} else if ( match[ 5 ] ) {
+				named[ match[ 5 ].toLowerCase() ] = match[ 6 ];
+			} else if ( match[ 7 ] ) {
+				numeric.push( match[ 7 ] );
+			} else if ( match[ 8 ] ) {
+				numeric.push( match[ 8 ] );
 			}
 		}
 
 		return {
-			named:   named,
-			numeric: numeric
+			named,
+			numeric,
 		};
 	}
 
 	/**
 	 * Replaces a piece of a string between two indexes.
 	 *
-	 * @param origin
-	 * @param startIndex
-	 * @param endIndex
-	 * @param insertion
-	 * @returns {string}
+	 * @param  origin
+	 * @param  startIndex
+	 * @param  endIndex
+	 * @param  insertion
+	 * @return {string}
 	 */
 	function replaceBetween( origin, startIndex, endIndex, insertion ) {
-		return origin.substring( 0, startIndex ) + insertion + origin.substring( endIndex );
+		return (
+			origin.substring( 0, startIndex ) +
+			insertion +
+			origin.substring( endIndex )
+		);
 	}
 
 	/**
@@ -176,43 +199,64 @@ export default function ShortcodeControls( { setAttributes, attributes, register
 	/**
 	 * Renders the block panel for Shortcode block.
 	 *
-	 * @param item
-	 * @param index
-	 * @returns {JSX.Element}
+	 * @param  item
+	 * @param  index
+	 * @return {JSX.Element}
 	 */
 	function renderPanelBody( item, index ) {
-		return(
-			<PanelBody key={ 'panel_' + index } title={ item.shortcode.tag.toUpperCase() } initialOpen={ false }>
+		return (
+			<PanelBody
+				key={ 'panel_' + index }
+				title={ item.shortcode.tag.toUpperCase() }
+				initialOpen={ false }
+			>
 				<>
-					{ JSON.stringify( item.shortcode.attrs.named ) === '{}' &&
-						<Text adjustLineHeightForInnerControls>{  __( 'Shortcode has no attributes.', 'better-shortcode-block' ) }</Text>
-					}
+					{ JSON.stringify( item.shortcode.attrs.named ) === '{}' && (
+						<Text adjustLineHeightForInnerControls>
+							{ __(
+								'Shortcode has no attributes.',
+								'better-shortcode-block'
+							) }
+						</Text>
+					) }
 
-					{ Object.keys( item.shortcode.attrs.named ).map( ( name, i ) => (
-						<TextControl
-							label={ name }
-							key={ index + '_' + name + '_' + i }
-							value={ item.shortcode.attrs.named[ name ] }
-							onChange={ ( value ) => updateShortcodeAtts( value, item, name ) }
-						/>
-					) ) }
+					{ Object.keys( item.shortcode.attrs.named ).map(
+						( name, i ) => (
+							<TextControl
+								label={ name }
+								key={ index + '_' + name + '_' + i }
+								value={ item.shortcode.attrs.named[ name ] }
+								onChange={ ( value ) =>
+									updateShortcodeAtts( value, item, name )
+								}
+							/>
+						)
+					) }
 
 					{ item.shortcode.attrs.numeric.map( ( property, i ) => (
 						<TextControl
-							label={ __( 'property', 'better-shortcode-block' ) + ' ' + i }
+							label={
+								__( 'property', 'better-shortcode-block' ) +
+								' ' +
+								i
+							}
 							key={ index + '_property_' + i }
 							value={ property }
-							onChange={ ( value ) => updateShortcodeAtts( value, item, i ) }
+							onChange={ ( value ) =>
+								updateShortcodeAtts( value, item, i )
+							}
 						/>
 					) ) }
 
-					{ item.shortcode.content  &&
+					{ item.shortcode.content && (
 						<TextareaControl
 							label={ __( 'content', 'better-shortcode-block' ) }
 							value={ item.shortcode.content }
-							onChange={ ( value ) => updateShortcodeContent( value, item ) }
+							onChange={ ( value ) =>
+								updateShortcodeContent( value, item )
+							}
 						/>
-					}
+					) }
 				</>
 			</PanelBody>
 		);
@@ -221,9 +265,9 @@ export default function ShortcodeControls( { setAttributes, attributes, register
 	return (
 		<InspectorControls>
 			<Panel>
-				{ parseShortcodes( attributes.text ).map( ( item, index ) => (
+				{ parseShortcodes( attributes.text ).map( ( item, index ) =>
 					renderPanelBody( item, index )
-				) ) }
+				) }
 			</Panel>
 		</InspectorControls>
 	);

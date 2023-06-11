@@ -13,7 +13,7 @@ import transforms from './transforms';
 import metadata from '../block.json';
 
 function replaceShortcodeBlock( currentSettings, currentName ) {
-	if ('core/shortcode' === currentName) {
+	if ( 'core/shortcode' === currentName ) {
 		return {
 			...metadata,
 			icon,

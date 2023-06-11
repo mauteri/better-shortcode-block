@@ -2,7 +2,13 @@
  * WordPress dependencies.
  */
 import { __ } from '@wordpress/i18n';
-import { BlockControls, PlainText, transformStyles, useBlockProps, store as blockEditorStore } from '@wordpress/block-editor';
+import {
+	BlockControls,
+	PlainText,
+	transformStyles,
+	useBlockProps,
+	store as blockEditorStore,
+} from '@wordpress/block-editor';
 import { useEffect, useState } from '@wordpress/element';
 import { ToolbarButton, SandBox, ToolbarGroup } from '@wordpress/components';
 import { useInstanceId } from '@wordpress/compose';
@@ -19,10 +25,12 @@ import ShortcodeControls from './controls';
 /**
  * Edit for Shortcode block.
  *
- * @param attributes
- * @param setAttributes
- * @returns {JSX.Element}
- * @constructor
+ * @param  attributes.attributes
+ * @param  attributes
+ * @param  setAttributes
+ * @param  attributes.setAttributes
+ * @return {JSX.Element}
+ * @class
  */
 export default function ShortcodeEdit( { attributes, setAttributes } ) {
 	const instanceId = useInstanceId( ShortcodeEdit );
@@ -70,19 +78,25 @@ export default function ShortcodeEdit( { attributes, setAttributes } ) {
 	 * Makes API call to get an updated render of shortcode on shortcode update.
 	 */
 	useEffect( () => {
-		apiFetch({
-			path: `/better-shortcode-block/shortcode?shortcode=${encodeURIComponent( attributes.text )}`,
-		}).then( ( res ) => {
+		apiFetch( {
+			path: `/better-shortcode-block/shortcode?shortcode=${ encodeURIComponent(
+				attributes.text
+			) }`,
+		} ).then( ( res ) => {
 			if ( res.success ) {
 				setRegisteredShortcodes( res.registered );
 				setShortcodeMarkup( res.rendered );
 			}
-		});
+		} );
 	}, [ attributes.text ] );
 
 	return (
 		<>
-			<View { ...useBlockProps( { className: 'block-library-shortcode__edit' } ) }>
+			<View
+				{ ...useBlockProps( {
+					className: 'block-library-shortcode__edit',
+				} ) }
+			>
 				<BlockControls>
 					<ToolbarGroup>
 						<ToolbarButton
@@ -104,29 +118,53 @@ export default function ShortcodeEdit( { attributes, setAttributes } ) {
 				{ attributes.preview ? (
 					<>
 						<SandBox html={ shortcodeMarkup } styles={ styles } />
-						<div style={{ position: "absolute", top: "0", right: "0", bottom: "0", left: "0" }}></div>
+						<div
+							style={ {
+								position: 'absolute',
+								top: '0',
+								right: '0',
+								bottom: '0',
+								left: '0',
+							} }
+						></div>
 					</>
 				) : (
-				<div className="components-placeholder" style={{ minHeight: "auto" }}>
-					<label
-						htmlFor={ inputId }
-						className="components-placeholder__label"
+					<div
+						className="components-placeholder"
+						style={ { minHeight: 'auto' } }
 					>
-						<Icon icon={ shortcode } />
-						{ __( 'Better Shortcode', 'better-shortcode-block' ) }
-					</label>
-					<PlainText
-						className="blocks-shortcode__textarea"
-						id={ inputId }
-						value={ attributes.text }
-						aria-label={ __( 'Shortcode text', 'better-shortcode-block' ) }
-						placeholder={ __( 'Write shortcode here…', 'better-shortcode-block' ) }
-						onChange={ ( text ) => setAttributes( { text } ) }
-					/>
-				</div>
+						<label
+							htmlFor={ inputId }
+							className="components-placeholder__label"
+						>
+							<Icon icon={ shortcode } />
+							{ __(
+								'Better Shortcode',
+								'better-shortcode-block'
+							) }
+						</label>
+						<PlainText
+							className="blocks-shortcode__textarea"
+							id={ inputId }
+							value={ attributes.text }
+							aria-label={ __(
+								'Shortcode text',
+								'better-shortcode-block'
+							) }
+							placeholder={ __(
+								'Write shortcode here…',
+								'better-shortcode-block'
+							) }
+							onChange={ ( text ) => setAttributes( { text } ) }
+						/>
+					</div>
 				) }
 			</View>
-			<ShortcodeControls setAttributes={ setAttributes } attributes={ attributes } registeredShortcodes={ registeredShortcodes } />
+			<ShortcodeControls
+				setAttributes={ setAttributes }
+				attributes={ attributes }
+				registeredShortcodes={ registeredShortcodes }
+			/>
 		</>
-	)
+	);
 }
