@@ -1,6 +1,8 @@
 <?php
 /**
- * @package better-shortcode-block
+ * Class is responsible for executing plugin setups.
+ *
+ * @package BetterShortcodeBlock
  */
 
 namespace BetterShortcodeBlock;

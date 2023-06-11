@@ -2,9 +2,8 @@
 /**
  * PHPUnit bootstrap file.
  *
- * @package better-shortcode-block
+ * @package BetterShortcodeBlock
  * @subpackage Tests
- * @since 1.0.0
  */
 
 // phpcs:disable Squiz.Commenting.FileComment.Missing

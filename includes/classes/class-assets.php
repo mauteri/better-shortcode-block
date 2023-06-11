@@ -1,6 +1,8 @@
 <?php
 /**
- * @package better-shortcode-block
+ * Class is responsible for loading all static assets.
+ *
+ * @package BetterShortcodeBlock
  */
 
 namespace BetterShortcodeBlock;

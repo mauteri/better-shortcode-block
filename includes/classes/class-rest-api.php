@@ -1,6 +1,8 @@
 <?php
 /**
- * @package better-shortcode-block
+ * Class is responsible for registering REST API endpoints.
+ *
+ * @package BetterShortcodeBlock
  */
 
 namespace BetterShortcodeBlock;
