@@ -20,6 +20,5 @@
 		"className": false,
 		"customClassName": false,
 		"html": false
-	},
-	"editorScript": "file:./build/index.js"
+	}
 }
